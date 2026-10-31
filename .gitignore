@@ -1,0 +1,17 @@
+# 虚拟环境(体积大,拿到仓库后执行 pip install -r requirements.txt 重建)
+.venv/
+
+# 密钥与本地配置 —— 绝不提交!
+.env
+
+# 第三方参考仓库(可随时重新克隆,不混入本项目历史)
+hello-agents/
+helloagents-framework/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+
+# IDE
+.vscode/
+.idea/
