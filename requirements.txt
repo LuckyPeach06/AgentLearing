@@ -1,5 +1,10 @@
 # HelloAgents 学习项目依赖清单
 # 安装方式:pip install -r requirements.txt
 # 注意:先在项目目录执行 python -m venv .venv 创建虚拟环境
-openai==3.41.0
+openai==1.109.1
 python-dotenv==1.2.4
+
+# HelloAgents 框架(教程第七章起使用)
+# 注意:教程各章基于 0.2.x 学习版编写,勿升级到 1.x(1.x 重构了 memory 等 API,不兼容)
+# [evaluation] 是可选扩展依赖(第十二章评估用,含 huggingface_hub 等)
+hello-agents[evaluation]==0.2.9

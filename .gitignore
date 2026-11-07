@@ -15,3 +15,6 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# 个人测试文件
+test.py
