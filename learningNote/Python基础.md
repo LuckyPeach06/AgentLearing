@@ -41,3 +41,6 @@ def greet(name: str, times: int) -> str: ...
 java中强制声明类型，且编译校验
 python不强制声明，且不校验，只是给人和工具看的，不是契约，只是注释
 所以python传参的数据类型如果有要求，需要自己校验
+
+## double,float
+python没有double，只有float
