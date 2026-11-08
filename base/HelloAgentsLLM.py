@@ -45,7 +45,7 @@ class HelloAgentsLLM:
         初始化客户端。参数优先级:显式传参 > 环境变量(.env)。
 
         Args:
-            model:    模型 ID,默认取 LLM_MODEL_ID
+            model:    模型 ID,默认取 LLM_MODEL_ID 
             api_key:  API 密钥,默认取 LLM_API_KEY
             base_url: 服务地址,默认取 LLM_BASE_URL(OpenAI 兼容端点)
             timeout:  请求超时秒数,默认取 LLM_TIMEOUT,兜底 60
