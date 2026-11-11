@@ -2,11 +2,12 @@
     Agent 基类
 """
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from pathlib import Path
 import sys
-from typing import Optional
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from base.myCode import Config, Message
 from base.myCode.HelloAgentsLLM import HelloAgentsLLM
 

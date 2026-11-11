@@ -1,13 +1,10 @@
 import os
 from typing import Optional
 
-from pathlib import Path
-import sys
-
 from openai import OpenAI
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from base.myCode.HelloAgentsLLM import HelloAgentsLLM
+from hello_agents import HelloAgentsLLM
+
 
 
 class MyLLM(HelloAgentsLLM):
