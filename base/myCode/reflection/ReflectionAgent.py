@@ -34,6 +34,10 @@ REFLECT_PROMPT_TEMPLATE = """
 如果代码在算法层面已经达到最优，才能回答“无需改进”。
 
 请直接输出你的反馈，不要包含任何额外的解释。
+在反馈的最后一行，必须单独给出结论，格式严格为以下两种之一（不要输出其他内容）：
+结论:需要改进
+或
+结论:无需改进
 """
 
 REFINE_PROMPT_TEMPLATE = """
@@ -80,7 +84,8 @@ class ReflectionAgent:
             self.memory.add_record("reflection", feedback)
 
             # b. 检查是否需要停止
-            if "无需改进" in feedback:
+            # 只看最后一行结论,避免"不宜判定为无需改进"这类否定句被子串误匹配
+            if feedback.strip().endswith("无需改进") or feedback.strip().endswith("no need for improvement"):
                 print("\n反思认为代码已无需改进，任务完成。")
                 break
             # c. 优化
@@ -92,7 +97,12 @@ class ReflectionAgent:
             refined_code = self.get_llm_response(refine_prompt)
             self.memory.add_record("execution", refined_code)
 
-        final_code = self.memory.get_last_execution()
+        final_code = self.memory.get_last_execution() or ""
+        # 模型输出的代码可能自带 ```python 围栏,剥掉,避免与打印层的围栏重复
+        if final_code.strip().startswith("```"):
+            first_newline = final_code.find("\n")
+            final_code = final_code[first_newline + 1:] if first_newline != -1 else final_code[3:]
+            final_code = final_code.rsplit("```", 1)[0].strip()
         print(f"\n--- 任务完成 ---\n最终生成的代码:\n```python\n{final_code}\n```")
         return final_code
 

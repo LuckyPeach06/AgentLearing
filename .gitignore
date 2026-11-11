@@ -1,5 +1,7 @@
 # 虚拟环境(体积大,拿到仓库后执行 pip install -r requirements.txt 重建)
 .venv/
+.venv-linux/
+.venv-vllm/
 
 # 密钥与本地配置 —— 绝不提交!
 .env
