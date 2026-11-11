@@ -34,10 +34,14 @@ def main() -> None:
     )
 
     print(f"模型: {llm_client.model} | 端点: {llm_client.base_url}\n")
-    response = llm_client.think(
+
+    # 注意:框架版 think() 返回流式生成器(Iterator[str]),不是字符串
+    chunks = llm_client.think(
         [{"role": "user", "content": "用一句话介绍一下你自己。"}],
         temperature=0.7,
     )
+    response = "".join(chunks)
+
     print("\n=== 本地模型响应 ===")
     print(response)
 
