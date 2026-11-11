@@ -3,10 +3,6 @@ from typing import Iterator, Optional
 
 from hello_agents import SimpleAgent, ToolRegistry, HelloAgentsLLM, Config, Message
 
-from pathlib import Path
-import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-
 class MySimpleAgent(SimpleAgent):
     """
         重写简单对话Agent
@@ -17,13 +13,10 @@ class MySimpleAgent(SimpleAgent):
                  llm: HelloAgentsLLM, 
                  system_prompt: Optional[str] = None, 
                  config: Optional[Config] = None, 
-                 tool_registry: Optional['ToolRegistry'] = None, 
+                 tool_registry: Optional[ToolRegistry] = None, 
                  enable_tool_calling: bool = True
     ):
-        super().__init__(name, llm, system_prompt, config)
-        self.tool_registry = tool_registry
-        self.enable_tool_calling = enable_tool_calling and tool_registry is not None
-
+        super().__init__(name, llm, system_prompt, config, tool_registry, enable_tool_calling)
         print(f"{name} 初始化完成，工具调用: {'启用' if self.enable_tool_calling else '禁用'}")
 
     def run(self, 
@@ -38,6 +31,7 @@ class MySimpleAgent(SimpleAgent):
         # 构建消息列表
         messages = []
 
+        # 系统提示词 + 工具信息
         enhanced_system_prompt = self._get_enhanced_system_prompt()
         messages.append(
             {
@@ -72,7 +66,7 @@ class MySimpleAgent(SimpleAgent):
             # 调用LLM
             response = self.llm.invoke(messages, **kwargs)
 
-            # 检查是否有工具调用
+            # 检查是否有工具调用, 返回工具列表
             tool_calls = self._parse_tool_calls(response)
 
             if tool_calls:
@@ -81,6 +75,7 @@ class MySimpleAgent(SimpleAgent):
                 clean_response = response
 
                 for call in tool_calls:
+                    # 工具字典
                     result = self._execute_tool_call(call['tool_name'], call['parameters'])
                     tool_results.append(result)
                     # 从响应中移除工具调用标记
