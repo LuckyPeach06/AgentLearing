@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
-from base.myCode.ch7.tool.ToolParameter import ToolParameter
+from ToolParameter import ToolParameter
 
 class Tool(ABC):
     """
