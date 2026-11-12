@@ -43,6 +43,21 @@ class ToolRegistry:
         }
         print(f"工具 '{name}' 已注册。")
 
+    def execute_tool(self, name: str, input_text: str) -> str:
+        """
+            执行工具:支持 Tool 对象和普通函数两种注册方式
+        """
+        tool = self._tools.get(name)
+        if tool:
+            # Tool 对象需要字典参数;这里做一个最简映射
+            return tool.run({"input": input_text})
+
+        info = self._functions.get(name)
+        if info:
+            return info["func"](input_text)
+
+        return f"错误:未找到工具 '{name}'"
+
     def get_tools_description(self) -> str:
         """
             获取所有可用工具的格式化描述字符串
@@ -50,11 +65,11 @@ class ToolRegistry:
 
         description = []
 
-        for tool in self.tools.values():
-            description.append(f"-{tool.name}:{tool.description}")
+        for tool in self._tools.values():
+            description.append(f"- {tool.name}: {tool.description}")
 
-        for name, info in self.functions.items():
-            description.append(f"-{name}:{info['description']}")
+        for name, info in self._functions.items():
+            description.append(f"- {name}: {info['description']}")
 
         return "\n".join(description) if description else "暂无可用工具"
 
