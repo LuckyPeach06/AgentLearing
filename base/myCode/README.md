@@ -16,6 +16,7 @@ base/myCode/
 │   ├── common/              # 公共记忆模块 MyMemory
 │   ├── llm/                 # 自定义 LLM(ModelScope Provider)
 │   ├── tests/               # 四个智能体的测试脚本
+│   ├── tool/                # 7.5 工具系统(手写 Tool/ToolParameter/ToolRegistry + 计算器)
 │   └── vllm/                # 本地 vLLM 启动脚本 / 接入示例 / 说明
 └── README.md
 ```
