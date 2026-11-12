@@ -6,10 +6,10 @@ from typing import Optional
 
 from pathlib import Path
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-from base.myCode import Config, Message
-from base.myCode.HelloAgentsLLM import HelloAgentsLLM
+from base.myCode.ch4.core import Config, Message
+from base.myCode.ch4.core.HelloAgentsLLM import HelloAgentsLLM
 
 
 class Agent(ABC):
@@ -23,7 +23,7 @@ class Agent(ABC):
         self.llm = llm
         self.system_prompt = system_prompt
         self.config = config or Config()
-        self.history = list[Message] = []
+        self.history: list[Message] = []
 
     @abstractmethod
     def run(self, user_input: str, **kwargs) -> str:

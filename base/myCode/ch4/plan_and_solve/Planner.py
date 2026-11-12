@@ -2,9 +2,9 @@ import ast
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-from base.myCode.HelloAgentsLLM import HelloAgentsLLM
+from base.myCode.ch4.core.HelloAgentsLLM import HelloAgentsLLM
 
 
 PLANNER_PROMPT_TEMPLATE = """

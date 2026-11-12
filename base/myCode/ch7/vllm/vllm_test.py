@@ -10,14 +10,14 @@
            --gpu-memory-utilization 0.6 --max-model-len 4096
 
 运行(主环境 .venv-linux 即可,不需要 vllm 依赖):
-  .venv-linux/bin/python base/myCode/ch7/vllm_test.py
+  .venv-linux/bin/python base/myCode/ch7/vllm/vllm_test.py
 """
 import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 # 注意:这里不加载项目 .env(否则 LLM_BASE_URL 会指向 DeepSeek),改为显式传参

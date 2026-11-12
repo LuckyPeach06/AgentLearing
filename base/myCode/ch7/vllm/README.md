@@ -3,7 +3,7 @@
 ## 第一步:启服务
 
 ```bash
-bash base/myCode/ch7/start_vllm.sh
+bash base/myCode/ch7/vllm/start_vllm.sh
 ```
 
 > 首次请求约需 30 秒(Triton 算子 JIT 编译,一次性开销),之后恢复正常速度。

@@ -3,11 +3,11 @@ import sys
 from pathlib import Path
 
 # 先修路,再开车:路径修复必须放在 base 导入之前
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-from base.myCode.HelloAgentsLLM import HelloAgentsLLM
-from ToolExecutor import ToolExecutor
-from searchTool import search
+from base.myCode.ch4.core.HelloAgentsLLM import HelloAgentsLLM
+from base.myCode.ch4.react.ToolExecutor import ToolExecutor
+from base.myCode.ch4.react.searchTool import search
 
 REACT_PROMPT_TEMPLATE = """
 请注意，你是一个有能力调用外部工具的AI智能助手。

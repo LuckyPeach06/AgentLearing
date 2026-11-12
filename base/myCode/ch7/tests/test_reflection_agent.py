@@ -1,7 +1,12 @@
 # test_reflection_agent.py
+from pathlib import Path
+import sys
+
 from dotenv import load_dotenv
 from hello_agents import HelloAgentsLLM
-from my_reflection_agent import MyReflectionAgent
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+from base.myCode.ch7.agents.my_reflection_agent import MyReflectionAgent
 
 load_dotenv()
 llm = HelloAgentsLLM()

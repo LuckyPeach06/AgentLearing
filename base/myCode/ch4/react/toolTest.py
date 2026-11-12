@@ -1,8 +1,12 @@
+import sys
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-from ToolExecutor import ToolExecutor
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-from searchTool import search
+from base.myCode.ch4.react.ToolExecutor import ToolExecutor
+from base.myCode.ch4.react.searchTool import search
 
 
 load_dotenv()

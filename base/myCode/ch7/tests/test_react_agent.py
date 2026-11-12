@@ -1,7 +1,12 @@
 # test_react_agent.py
+from pathlib import Path
+import sys
+
 from dotenv import load_dotenv
 from hello_agents import HelloAgentsLLM, ToolRegistry
-from my_react_agent import MyReActAgent
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+from base.myCode.ch7.agents.my_react_agent import MyReActAgent
 
 # 加载环境变量
 load_dotenv()

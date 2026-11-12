@@ -3,8 +3,8 @@ import sys
 
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from base.myCode.my_llm import MyLLM
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+from base.myCode.ch7.llm.my_llm import MyLLM
 
 
 load_dotenv()

@@ -1,12 +1,11 @@
 from pathlib import Path
 import sys
 
-from Planner import Planner
-from Executor import Executor
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
-
-from base.myCode.HelloAgentsLLM import HelloAgentsLLM
+from base.myCode.ch4.core.HelloAgentsLLM import HelloAgentsLLM
+from base.myCode.ch4.plan_and_solve.Planner import Planner
+from base.myCode.ch4.plan_and_solve.Executor import Executor
 
 
 class PlanAndSolveAgent:

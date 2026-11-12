@@ -44,8 +44,8 @@ from typing import Dict, Optional
 
 from hello_agents import Config, HelloAgentsLLM, Message, ReflectionAgent
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from base.myCode.my_memory import MyMemory
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+from base.myCode.ch7.common.my_memory import MyMemory
 
 
 class MyReflectionAgent(ReflectionAgent):
@@ -61,19 +61,20 @@ class MyReflectionAgent(ReflectionAgent):
                          llm, 
                          system_prompt, 
                          config, 
-                         max_iterations,
-                         custom_prompts
+                         max_iterations
         )
+        self.prompts = custom_prompts if custom_prompts else DEFAULT_PROMPTS
         print(f"{name} 初始化已完成, 最大迭代次数:{max_iterations}")
 
 
     def run(self, task: str, **kwargs):
+        self.memory = MyMemory()
         print(f"\n--- 开始处理任务 ---\n任务: {task}")
 
         # --- 1. 初始执行 ---
         print("\n--- 正在进行初始尝试 ---")
         initial_prompt = self.prompts["initial"].format(task = task)
-        initial_answer = self.get_llm_response(initial_prompt, **kwargs)
+        initial_answer = self._get_llm_response(initial_prompt, **kwargs)
         self.memory.add_record("execution", initial_answer)
 
         # --- 2. 迭代循环:反思与优化 ---
@@ -85,7 +86,7 @@ class MyReflectionAgent(ReflectionAgent):
 
             last_answer = self.memory.get_last_execution()
             reflect_prompt = self.prompts["reflect"].format(task = task, content = last_answer)
-            feedback = self.get_llm_response(reflect_prompt)
+            feedback = self._get_llm_response(reflect_prompt)
             self.memory.add_record("reflection", feedback)
 
             # b. 检查是否需要停止
@@ -103,7 +104,7 @@ class MyReflectionAgent(ReflectionAgent):
                 last_attempt = last_answer,
                 feedback = feedback
             )
-            refined_code = self.get_llm_response(refine_prompt)
+            refined_code = self._get_llm_response(refine_prompt)
             self.memory.add_record("execution", refined_code)
 
         final_answer = self.memory.get_last_execution() or ""
@@ -118,12 +119,3 @@ class MyReflectionAgent(ReflectionAgent):
         
         print(f"\n--- 任务完成 ---\n最终生成的代码:\n```python\n{final_answer}\n```")
         return final_answer
-
-    def get_llm_response(self, prompt, **kwargs) -> str:
-        """
-            一个辅助方法，用于调用LLM并获取完整的流式响应。
-        """
-        messages = [{"role": "user", "content": prompt}]
-        response_text = self.llm.invoke(messages=messages, **kwargs) or ""
-
-        return response_text    

@@ -20,7 +20,7 @@ class Message(BaseModel):
     content: str
     role: MessageRole
     timestamp: datetime = None
-    metadata: Optional[Dict[str: Any]] = None
+    metadata: Optional[Dict[str, Any]] = None
 
     def __init__(self, content: str, role: MessageRole, **kwargs):
         super().__init__(
@@ -30,7 +30,7 @@ class Message(BaseModel):
             metadata = kwargs.get('metadata', {})
         )
 
-    def to_dict(self) -> Dict[str: Any]:
+    def to_dict(self) -> Dict[str, Any]:
         return {
             "role": self.role,
             "content": self.content

@@ -3,8 +3,8 @@ from hello_agents import CalculatorTool, HelloAgentsLLM, ToolRegistry
 
 from pathlib import Path
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from base.myCode.my_simple_agent import MySimpleAgent
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+from base.myCode.ch7.agents.my_simple_agent import MySimpleAgent
 
 
 load_dotenv()
