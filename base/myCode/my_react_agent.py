@@ -42,16 +42,16 @@ class MyReActAgent(ReActAgent):
                  system_prompt: Optional[str] = None, 
                  config: Optional[Config] = None, 
                  max_steps: int = 5, 
-                 custom_prompt = Optional[str] = None
+                 custom_prompt: Optional[str] = None
     ):
-        super().__init__(name, 
-                         llm, 
-                         system_prompt, 
-                         config
+        super().__init__(name= name, 
+                         llm = llm, 
+                         system_prompt = system_prompt, 
+                         config = config
         )
         self.tool_registry = tool_registry
         self.max_steps = max_steps
-        self.custom_history = List[str] = []
+        self.current_history: List[str] = []
         self.prompt_template = custom_prompt if custom_prompt else MY_REACT_PROMPT
 
         print(f"{name} 初始化完成，最大步数: {max_steps}")
@@ -60,7 +60,7 @@ class MyReActAgent(ReActAgent):
         运行LLM回答一个问题
     """
     def run(self, input_text: str, **kwargs) -> str:
-        self.history = []
+        self.current_history = []
         current_step = 0
 
         while current_step < self.max_steps:
@@ -69,7 +69,7 @@ class MyReActAgent(ReActAgent):
 
             # 1.格式化提示词
             tool_desc = self.tool_registry.get_tools_description()
-            history_str = "\n".join(self.history)
+            history_str = "\n".join(self.current_history)
 
             prompt = self.prompt_template.format(
                 tools = tool_desc,
@@ -86,6 +86,7 @@ class MyReActAgent(ReActAgent):
             ]
 
             # ReAct 的输出要靠正则解析,格式必须稳定，temperature必须为0
+            kwargs.setdefault("temperature", 0)
             response_content = self.llm.invoke(messages = messages, **kwargs)
             if not response_content:
                 print(f"ERROR:LLM未收到有效返回内容")
@@ -103,55 +104,28 @@ class MyReActAgent(ReActAgent):
 
             # 执行Action
             if action.startswith("Finish"):
-                final_answer = self._parse_action_input()
+                final_answer = self._parse_action_input(action)
                 self.add_message(Message(input_text, "user"))
                 self.add_message(Message(final_answer, "assistant"))
                 return final_answer
             
             tool_name, tool_input = self._parse_action(action)
             if not tool_input or not tool_name:
+                self.current_history.append(
+                    "Observation: 无效的 Action 格式,请严格使用 工具名[参数] 或 Finish[答案]。"
+                )
                 continue
             print(f"Action:{tool_name}[{tool_input}]")
 
-            tool_function = self.tool_registry.get_tool(tool_name)
-            if not tool_function:
-                observation = f"ERROR: 未找到名为'{tool_name}'的工具"
-            else:
-                observation = self.tool_registry.execute_tool(tool_input)
+            observation = self.tool_registry.execute_tool(tool_name, tool_input)
 
             print(f"Observation: {observation}")
 
-            self.history.append(f"Action: {action}")
-            self.history.append(f"Observation: {observation}")
+            self.current_history.append(f"Action: {action}")
+            self.current_history.append(f"Observation: {observation}")
 
         # 达到最大步数
         final_answer = "抱歉，我无法在限定步数内完成这个任务。"
         self.add_message(Message(input_text, "user"))
         self.add_message(Message(final_answer, "assistant"))
         return final_answer
-
-    
-
-    """
-        解析LLM输出，提取Thought和Action
-    """
-    def _parse_output(self, text: str):
-        # Thought: 匹配到 Action: 或文本末尾
-        thought_match = re.search(r"Thought:\s*(.*?)(?=\nAction:|$)", text, re.DOTALL)
-        
-        # Action: 匹配到文本末尾
-        action_match = re.search(r"Action:\s*(.*?)$", text, re.DOTALL)
-
-        thought = thought_match.group(1).strip() if thought_match else None
-        action = action_match.group(1).strip() if action_match else None
-
-        return thought, action
-
-    """
-        解析Action字符串，提取工具名称和用户输入
-    """
-    def _parse_action(self, action_text: str):
-        match = re.match(r"(\w+)\[(.*)\]", action_text, re.DOTALL)
-        if match:
-            return match.group(1), match.group(2)
-        return None, None
