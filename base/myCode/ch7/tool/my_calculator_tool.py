@@ -2,7 +2,7 @@ import ast
 import math
 import operator
 
-from base.myCode.ch7.tool.ToolRegistry import ToolRegistry
+from .ToolRegistry import ToolRegistry
 
 
 

@@ -16,7 +16,7 @@ base/myCode/
 │   ├── common/              # 公共记忆模块 MyMemory
 │   ├── llm/                 # 自定义 LLM(ModelScope Provider)
 │   ├── tests/               # 四个智能体的测试脚本
-│   ├── tool/                # 7.5 工具系统(手写 Tool/ToolParameter/ToolRegistry + 计算器)
+│   ├── tool/                # 7.5 工具系统(基类/注册表/计算器/搜索/工具链/异步)
 │   └── vllm/                # 本地 vLLM 启动脚本 / 接入示例 / 说明
 └── README.md
 ```
@@ -41,6 +41,20 @@ base/myCode/
 .venv-linux/bin/python base/myCode/ch7/tests/test_react_agent.py
 .venv-linux/bin/python base/myCode/ch7/tests/test_reflection_agent.py
 .venv-linux/bin/python base/myCode/ch7/tests/test_plan_solve_agent.py
+```
+
+### 第七章 7.5:工具系统
+
+```bash
+.venv-linux/bin/python base/myCode/ch7/tool/test_my_calculator.py
+.venv-linux/bin/python base/myCode/ch7/tool/test_advanced_search.py
+```
+
+`tool/` 内部使用相对导入(`from .Tool import Tool`)。测试脚本可以直接运行;
+若要运行库模块本身,请在项目根目录用模块方式:
+
+```bash
+.venv-linux/bin/python -m base.myCode.ch7.tool.tool_chain_manager
 ```
 
 ### 本地 vLLM

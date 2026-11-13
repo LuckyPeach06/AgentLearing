@@ -1,6 +1,6 @@
 from typing import Any, Callable, Dict
 
-from Tool import Tool
+from .Tool import Tool
 
 
 class ToolRegistry:

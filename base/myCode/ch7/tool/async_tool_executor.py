@@ -3,7 +3,7 @@ import concurrent
 import concurrent.futures
 from typing import Dict, List
 
-from ToolRegistry import ToolRegistry
+from .ToolRegistry import ToolRegistry
 
 
 class AsyncToolExecutor:
