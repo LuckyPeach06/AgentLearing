@@ -1,0 +1,189 @@
+user@localhost:/mnt/d/Work/agentLearning$ /mnt/d/Work/agentLearning/.venv-linux/bin/python /mnt/d/Work/agentLearning/hello-agents/code/chapter8/01_MemoryTool_Basic_Operations.py
+🚀 MemoryTool基础操作完整演示
+展示记忆系统的核心功能和操作方法
+============================================================
+🧠 MemoryTool基础操作演示
+==================================================
+[OK] SQLite 数据库表和索引创建完成
+[OK] SQLite 文档存储初始化完成: ./memory_data/memory.db
+INFO:hello_agents.memory.storage.qdrant_store:✅ 成功连接到Qdrant云服务: https://18120ca7-a780-409d-91ac-0d76d1f0daa1.eu-west-2-0.aws.cloud.qdrant.io
+/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/qdrant_client/qdrant_remote.py:282: UserWarning: Qdrant client version 1.18.0 is incompatible with server version1.20.0. Major versions should match and minor version difference must not exceed 1. Set check_compatibility=False to skip version check.
+  show_warning(
+INFO:hello_agents.memory.storage.qdrant_store:✅ 使用现有Qdrant集合: hello_agents_vectors
+INFO:hello_agents.memory.types.semantic:✅ 嵌入模型就绪，维度: 1024
+INFO:hello_agents.memory.types.semantic:✅ Qdrant向量数据库初始化完成
+ERROR:neo4j.pool:Unable to retrieve routing information
+ERROR:hello_agents.memory.storage.neo4j_store:❌ Neo4j服务不可用: Unable to retrieve routing information
+INFO:hello_agents.memory.storage.neo4j_store:💡 请检查URL和网络连接
+ERROR:hello_agents.memory.types.semantic:❌ 数据库初始化失败: Unable to retrieve routing information
+INFO:hello_agents.memory.types.semantic:💡 请检查数据库配置和网络连接
+INFO:hello_agents.memory.types.semantic:💡 参考 DATABASE_SETUP_GUIDE.md 进行配置
+
+❌ 演示过程中发生错误: Unable to retrieve routing information
+  | ExceptionGroup: All routing table requests failed (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 608, in _connect_secure
+    |     s = ssl_context.wrap_socket(s, server_hostname=sni_host)
+    |   File "/usr/lib/python3.14/ssl.py", line 455, in wrap_socket
+    |     return self.sslsocket_class._create(
+    |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+    |         sock=sock,
+    |         ^^^^^^^^^^
+    |     ...<5 lines>...
+    |         session=session
+    |         ^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/usr/lib/python3.14/ssl.py", line 1076, in _create
+    |     self.do_handshake()
+    |     ~~~~~~~~~~~~~~~~~^^
+    |   File "/usr/lib/python3.14/ssl.py", line 1372, in do_handshake
+    |     self._sslobj.do_handshake()
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+    | ConnectionResetError: [Errno 104] Connection reset by peer
+    | 
+    | The above exception was the direct cause of the following exception:
+    | 
+    | Traceback (most recent call last):
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_bolt/_bolt_socket.py", line 329, in connect
+    |     s = cls._connect_secure(
+    |         resolved_address,
+    |     ...<3 lines>...
+    |         ssl_context,
+    |     )
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 621, in _connect_secure
+    |     raise BoltSecurityError(
+    |     ...<2 lines>...
+    |     ) from cause
+    | neo4j._exceptions.BoltSecurityError: [ConnectionResetError] Connection Failed. Please ensure that your database is listening on the correct host and port and that you have enabled encryption if required. Note that the default encryption setting has changed in Neo4j 4.0. See the docs for more information. Failed to establish encrypted connection. (code 104: Connection reset by peer)
+    | 
+    | The above exception was the direct cause of the following exception:
+    | 
+    | Traceback (most recent call last):
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 925, in fetch_routing_table
+    |     new_routing_info = self.fetch_routing_info(
+    |         address,
+    |     ...<4 lines>...
+    |         acquisition_timeout,
+    |     )
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 884, in fetch_routing_info
+    |     cx = self._acquire(address, auth, deadline, None)
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 552, in _acquire
+    |     return connection_creator()
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 361, in connection_creator
+    |     connection = self.opener(
+    |         address, auth or self.pool_config.auth, deadline
+    |     )
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 804, in opener
+    |     return Bolt.open(
+    |            ~~~~~~~~~^
+    |         addr,
+    |         ^^^^^
+    |     ...<3 lines>...
+    |         pool_config=pool_config,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_bolt/_base.py", line 340, in open
+    |     s, protocol_version = BoltSocket.connect(
+    |                           ~~~~~~~~~~~~~~~~~~^
+    |         address,
+    |         ^^^^^^^^
+    |     ...<4 lines>...
+    |         keep_alive=pool_config.keep_alive,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_bolt/_bolt_socket.py", line 380, in connect
+    |     raise ServiceUnavailable(
+    |     ...<2 lines>...
+    |     ) from errors[0]
+    | neo4j.exceptions.ServiceUnavailable: Couldn't connect to 34.126.64.110:7687 (resolved to ('34.126.64.110:7687',)):
+    | [ConnectionResetError] Connection Failed. Please ensure that your database is listening on the correct host and port and that you have enabled encryption if required. Note that the default encryption setting has changed in Neo4j 4.0. See the docs for more information. Failed to establish encrypted connection. (code 104: Connection reset by peer)
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/d/Work/agentLearning/hello-agents/code/chapter8/01_MemoryTool_Basic_Operations.py", line 163, in main
+    memory_tool = memory_tool_execute_demo()
+  File "/mnt/d/Work/agentLearning/hello-agents/code/chapter8/01_MemoryTool_Basic_Operations.py", line 20, in memory_tool_execute_demo
+    memory_tool = MemoryTool(
+        user_id="demo_user",
+        memory_types=["working", "episodic", "semantic", "perceptual"]
+    )
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/tools/builtin/memory_tool.py", line 40, in __init__
+    self.memory_manager = MemoryManager(
+                          ~~~~~~~~~~~~~^
+        config=self.memory_config,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        enable_perceptual="perceptual" in self.memory_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/memory/manager.py", line 51, in __init__
+    self.memory_types['semantic'] = SemanticMemory(self.config)
+                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/memory/types/semantic.py", line 108, in __init__
+    self._init_databases()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/memory/types/semantic.py", line 156, in _init_databases
+    self.graph_store = Neo4jGraphStore(**neo4j_config)
+                       ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/memory/storage/neo4j_store.py", line 57, in __init__
+    self._initialize_driver(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        max_connection_lifetime=max_connection_lifetime,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        max_connection_pool_size=max_connection_pool_size,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        connection_acquisition_timeout=connection_acquisition_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/hello_agents/memory/storage/neo4j_store.py", line 76, in _initialize_driver
+    self.driver.verify_connectivity()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/driver.py", line 1102, in verify_connectivity
+    self._get_server_info(session_config)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/driver.py", line 1331, in _get_server_info
+    return session._get_server_info()
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/work/session.py", line 172, in _get_server_info
+    self._connect(
+    ~~~~~~~~~~~~~^
+        READ_ACCESS, liveness_check_timeout=0, unprepared=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/work/session.py", line 125, in _connect
+    super()._connect(
+    ~~~~~~~~~~~~~~~~^
+        access_mode, auth=self._config.auth, **acquire_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/work/workspace.py", line 166, in _connect
+    target_db = self._get_routing_target_database(
+        acquire_auth,
+        ssr_enabled=ssr_enabled,
+        acquisition_deadline=acquisition_deadline,
+    )
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/work/workspace.py", line 244, in _get_routing_target_database
+    self._pool.update_routing_table(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        database=self._config.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        database_callback=self._make_db_resolution_callback(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/mnt/d/Work/agentLearning/.venv-linux/lib/python3.14/site-packages/neo4j/_sync/io/_pool.py", line 1168, in update_routing_table
+    raise ServiceUnavailable(
+        "Unable to retrieve routing information"
+    ) from e
+neo4j.exceptions.ServiceUnavailable: Unable to retrieve routing information

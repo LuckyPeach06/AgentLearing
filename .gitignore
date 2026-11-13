@@ -20,3 +20,8 @@ __pycache__/
 
 # 个人测试文件
 test.py
+
+# 第八章示例生成的本地数据
+memory_data/
+knowledge_base/
+*_kb/
