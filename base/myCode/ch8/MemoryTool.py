@@ -1,14 +1,110 @@
 from datetime import datetime
+from typing import List
+
+from base.myCode.ch7.tool.Tool import Tool
+from base.myCode.ch8 import MemoryConfig, MemoryManager
 
 """
     仅作为读教程时跟敲代码使用，依赖补全，代码不全，无法运行
 """
-class MemoryTool:
+class MemoryTool(Tool):
 
-    # def _search_memory(
-    #         self,
+    def __init__(self, 
+                 user_id: str = "default_user", 
+                 memory_config: MemoryConfig = None,
+                 memory_types: List[str] = None
+    ):
+        super().__init__(
+            name = "memory", 
+            description = "记忆工具 - 可以存储和检索对话历史、知识和经验"
+        )
+        # 初始化记忆管理器
+        self.memory_config = memory_config or MemoryConfig()
+        self.memory_types = memory_types or ["working", "episodic", "semantic"]
 
-    # )
+        self.memory_manager = MemoryManager(
+            config = self.memory_config,
+            user_id = user_id,
+            enable_working = "working" in self.memory_types,
+            enable_episodic="episodic" in self.memory_types,
+            enable_semantic="semantic" in self.memory_types,
+            enable_perceptual="perceptual" in self.memory_types
+        )
+
+
+
+    def _consolidate(self, 
+                    from_type: str = "working",
+                    to_type: str = "episodic",
+                    importance_threshold: float = 0.7
+    ) -> str:
+        try:
+            count = self.memory_manager.consolidate_memories(
+                from_type = from_type,
+                to_type = to_type,
+                importance_threshold = importance_threshold
+            )
+            return f"已整合 {count} 条记忆为长期记忆（{from_type} → {to_type}，阈值={importance_threshold}）"
+        except Exception as e:
+            return f"整合记忆失败: {str(e)}"
+
+
+    def _forget(self,
+                strategy: str = "importance_based",
+                threshold: float = 0.1,
+                max_age_days: int = 30
+    ) -> str:
+        try:
+            count = self.memory_manager.forget_memories(
+                strategy = strategy,
+                threshold = threshold,
+                max_age_days = max_age_days
+            )
+            return f"已遗忘{count}条记忆(策略：{strategy})"
+        except Exception as e:
+            return f"遗忘记忆失败：{str(e)}"
+
+    def _search_memory(
+            self,
+            query: str,
+            limit: int= 5,
+            memory_type: str = None,
+            memory_types: List[str] = None,
+            min_importance: float = 0.1
+    ):
+        try:
+            if memory_type and not memory_types:
+                memory_types = [memory_type]
+
+            results = self.memory_manager.retrieve_memories(
+                query = query,
+                limit = limit,
+                memory_types = memory_types,
+                min_importance = min_importance
+            )
+
+            if not results:
+                return f"未找到与 '{query}' 相关的记忆"
+
+            formatted_results = []
+            formatted_results.append(f"找到 {len(results)} 条相关记忆:")
+
+            for i, memory in enumerate(results, 1):
+                 memory_type_label = {
+                "working": "工作记忆",
+                "episodic": "情景记忆", 
+                "semantic": "语义记忆",
+                "perceptual": "感知记忆"
+            }.get(memory.memory_type, memory.memory_type)
+
+            content_preview = memory.content[:80] + "..." if len(memory.content) > 80 else memory.content
+            formatted_results.append(
+                f"{i}. [{memory_type_label}] {content_preview} (重要性: {memory.importance:.2f})"
+            )
+
+            return "\n".join(formatted_results)
+        except Exception as e:
+            return f"搜索记忆失败: {str(e)}"
 
 
 
