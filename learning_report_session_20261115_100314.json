@@ -1,0 +1,15 @@
+{
+  "session_info": {
+    "session_id": "session_20261115_100314",
+    "user_id": "lcl",
+    "start_time": "2026-11-15T10:03:28.337405",
+    "duration_seconds": 198.930235
+  },
+  "learning_metrics": {
+    "documents_loaded": 1,
+    "questions_asked": 1,
+    "concepts_learned": 1
+  },
+  "memory_summary": "📊 记忆系统摘要\n总记忆数: 4\n当前会话: session_20261115_100359\n对话轮次: 0\n\n📋 记忆类型分布:\n  • 工作记忆: 1 条 (平均重要性: 0.60)\n  • 情景记忆: 2 条 (平均重要性: 0.80)\n  • 语义记忆: 1 条 (平均重要性: 0.80)\n\n⭐ 重要记忆 (前6条):\n  1. 加载了文档《Happy-LLM-0727.pdf》 (重要性: 0.90)\n  2. Transformer 由 Encoder 和 Decoder 组成 (重要性: 0.80)\n  3. **大语言模型（LLM）**可以理解为：一类参数规模很大、经过海量语料预训练、并在复杂任务上展现出远超传统预训练模型能力... (重要性: 0.80)\n  4. 关于'Transformer架构有哪些核心组件？'的学习 (重要性: 0.70)\n  5. 关于'英伟达最新的GPU型号是什么'的学习 (重要性: 0.70)\n  6. 关于'什么是大语言模型？'的学习 (重要性: 0.70)",
+  "rag_status": "📊 **RAG 知识库统计**\n📝 命名空间: default\n📋 集合名称: rag_knowledge_base\n📂 存储根路径: ./knowledge_base\n📦 存储类型: qdrant\n📊 文档分块数: 94\n🔢 向量维度: 1024\n📎 距离度量: Cosine\n\n🟢 **系统状态**\n✅ RAG 管道: 正常\n✅ LLM 连接: 正常"
+}
