@@ -8,3 +8,9 @@ python-dotenv==1.2.4
 # 注意:教程各章基于 0.2.x 学习版编写,勿升级到 1.x(1.x 重构了 memory 等 API,不兼容)
 # [evaluation] 是可选扩展依赖(第十二章评估用,含 huggingface_hub 等)
 hello-agents[evaluation]==0.2.9
+
+# 第十章 通信协议(MCP / A2A)
+# a2a-sdk 必须锁 0.3.x:1.x 移除了 a2a.client.A2AClient,hello-agents 0.2.9 会判定"未安装"
+a2a-sdk==0.3.26
+# A2A 服务端用 Flask 提供 HTTP API
+flask>=3.0
