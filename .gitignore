@@ -25,3 +25,11 @@ test.py
 memory_data/
 knowledge_base/
 *_kb/
+
+# 评测数据集与生成产物（体积大/可重新生成/受访问限制）
+data/gaia/
+temp_gorilla/
+evaluation_results/
+evaluation_reports/
+result/
+gaia_results.jsonl

@@ -43,3 +43,19 @@ if "无需改进" in feedback:
         action = "ask"
 
 执行正常
+
+# agent性能评估中，测试GAIA时，数据集加载失败
+原因：
+    GAIA 数据集在 HuggingFace 上已经改成 parquet 格式：
+    data/gaia/2023/validation/metadata.parquet
+
+    但 hello-agents 的 GAIADataset 只找：
+    data/gaia/2023/validation/metadata.jsonl
+
+    找不到就返回 0 条样本，所以评估失败。
+
+解决：
+    给 GAIADataset 加了 parquet 支持：
+        本地加载时，如果没有 JSON，就读取 metadata*.parquet
+        HuggingFace 下载后如果没有 metadata.jsonl，同样回退到 parquet
+        把 parquet 里的 Level 字符串转成整数，否则按 level=1 过滤会得到 0 条

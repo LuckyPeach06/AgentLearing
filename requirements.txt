@@ -6,8 +6,18 @@ python-dotenv==1.2.4
 
 # HelloAgents 框架(教程第七章起使用)
 # 注意:教程各章基于 0.2.x 学习版编写,勿升级到 1.x(1.x 重构了 memory 等 API,不兼容)
-# [evaluation] 是可选扩展依赖(第十二章评估用,含 huggingface_hub 等)
-hello-agents[evaluation]==0.2.9
+# 不要用 hello-agents[evaluation]:它把 gradio 锁在 <5.0,会与第八章的 Gradio 6 冲突
+hello-agents==0.2.9
+
+# 第十二章 评估依赖(手动列出,避免 evaluation extra 降级 Gradio)
+datasets>=2.14.0
+huggingface_hub>=0.20.0,<2.0
+evaluate>=0.4.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.65.0
+gradio>=6.0
 
 # 第十章 通信协议(MCP / A2A)
 # a2a-sdk 必须锁 0.3.x:1.x 移除了 a2a.client.A2AClient,hello-agents 0.2.9 会判定"未安装"
